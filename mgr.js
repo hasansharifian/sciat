@@ -7,7 +7,7 @@ define(function(require){
         sciat: [{
             type: 'time',
             name: 'sciat',
-            scriptUrl: 'sciat.js'  // Make sure this matches your filename
+            scriptUrl: 'stiat.js'  // Make sure this matches your filename
         }]
     });
 
