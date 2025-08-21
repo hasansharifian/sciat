@@ -1,13 +1,13 @@
 define(function(require){
     var API = new require('managerAPI')();
 
-    API.addSettings('skip', true); // Skip the loading screen
+    API.addSettings('skip', true);
 
     API.addTasksSet({
-        sciat: [{
+        stiat: [{
             type: 'time',
             name: 'stiat',
-            scriptUrl: 'stiat.js'  // Make sure this matches your filename
+            scriptUrl: 'stiat.js'
         }]
     });
 
