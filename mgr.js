@@ -6,13 +6,13 @@ define(function(require){
     API.addTasksSet({
         sciat: [{
             type: 'time',
-            name: 'sciat',
+            name: 'stiat',
             scriptUrl: 'stiat.js'  // Make sure this matches your filename
         }]
     });
 
     API.addSequence([
-        {inherit: 'sciat'}
+        {inherit: 'stiat'}
     ]);
 
     return API.script;
