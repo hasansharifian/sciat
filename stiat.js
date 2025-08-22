@@ -25,7 +25,6 @@ function makeBalancedNoRepeat(list, nTotal) {
   const base = Math.floor(nTotal / k);
   const rem  = nTotal % k;
   const counts = list.map((_, i) => base + (i < rem ? 1 : 0));
-
   const seq = [];
   let last = null;
   for (let t = 0; t < nTotal; t++) {
@@ -33,16 +32,14 @@ function makeBalancedNoRepeat(list, nTotal) {
     let bestCount = -1;
     for (let i = 0; i < k; i++) {
       if (counts[i] > 0 && list[i] !== last && counts[i] > bestCount) {
-        bestCount = counts[i];
-        bestIdx = i;
+        bestCount = counts[i]; bestIdx = i;
       }
     }
     if (bestIdx === -1) {
       for (let i = 0; i < k; i++) if (counts[i] > 0) { bestIdx = i; break; }
     }
     seq.push(list[bestIdx]);
-    counts[bestIdx]--;
-    last = list[bestIdx];
+    counts[bestIdx]--; last = list[bestIdx];
   }
   return seq;
 }
@@ -51,10 +48,7 @@ function fixImmediateRepeats(items, keyFn) {
     if (keyFn(items[i]) === keyFn(items[i-1])) {
       for (let j = i + 1; j < items.length; j++) {
         if (keyFn(items[j]) !== keyFn(items[i-1])) {
-          const tmp = items[i];
-          items[i] = items[j];
-          items[j] = tmp;
-          break;
+          const tmp = items[i]; items[i] = items[j]; items[j] = tmp; break;
         }
       }
     }
@@ -71,7 +65,7 @@ function labelsHTML(leftLabels, rightLabels) {
     </div>`;
 }
 
-// ====== Blocks ======
+// ====== Block definitions ======
 const pairingA = { left: ['collective','honor'], right: ['singular'],
                    leftLabel: ['Collective','Honor'], rightLabel: ['Singular'], tag: 'A' };
 const pairingB = { left: ['singular'], right: ['collective','honor'],
@@ -102,13 +96,14 @@ function buildCombinedVars(pairing) {
   return fixImmediateRepeats(jsPsych.randomization.shuffle([...honorSeq, ...collSeq, ...singSeq]), it => it.stimulus);
 }
 
+// ====== Trial builder ======
 function iatTrial(blockName, pairing, vars) {
   return {
     timeline: [{
       type: jsPsychIatHtml,
       stimulus: jsPsych.timelineVariable('stimulus'),
       stim_key_association: jsPsych.timelineVariable('key'),
-      html_when_wrong: '<div style="color:red; font-size:100px;">X</div>',
+      html_when_wrong: '<div style="color:red; font-size:120px;">X</div>',
       display_feedback: true,
       force_correct_key_press: true,
       bottom_instructions: labelsHTML(pairing.leftLabel, pairing.rightLabel),
