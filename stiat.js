@@ -1,15 +1,14 @@
-// ====== Setup ======
+// ===== Setup =====
 var jsPsych = initJsPsych({
-  display_element: 'jspsych-target'
+  display_element: "jspsych-target"
 });
 
-const LEFT_KEY  = 'e';
-const RIGHT_KEY = 'i';
+const LEFT_KEY  = "e";
+const RIGHT_KEY = "i";
 
-// ====== Stimuli ======
-const HONOR = ['Helpful','Honest','Respectable','Valued','Proud','Confident'];
-const COLLECTIVE = ['We','Us','Our','Ours','Family','Community'];
-const SINGULAR   = ['I','Me','Mine','Myself','Self','Individual'];
+const HONOR = ["Helpful","Honest","Respectable","Valued","Proud","Confident"];
+const COLLECTIVE = ["We","Us","Our","Ours","Family","Community"];
+const SINGULAR   = ["I","Me","Mine","Myself","Self","Individual"];
 
 const N_PRACTICE_ATTR   = 24;
 const N_COMBINED_TARGET = 20;
@@ -18,14 +17,13 @@ const ERROR_PENALTY_MS  = 400;
 const MIN_RT            = 350;
 const MAX_RT            = 10000;
 
-// ====== Helpers ======
+// ===== Helpers =====
 function makeBalancedNoRepeat(list, nTotal) {
   const k = list.length;
   if (k === 0 || nTotal <= 0) return [];
   const base = Math.floor(nTotal / k);
   const rem  = nTotal % k;
   const counts = list.map((_, i) => base + (i < rem ? 1 : 0));
-
   const seq = [];
   let last = null;
   for (let t = 0; t < nTotal; t++) {
@@ -46,6 +44,7 @@ function makeBalancedNoRepeat(list, nTotal) {
   }
   return seq;
 }
+
 function fixImmediateRepeats(items, keyFn) {
   for (let i = 1; i < items.length; i++) {
     if (keyFn(items[i]) === keyFn(items[i-1])) {
@@ -61,9 +60,10 @@ function fixImmediateRepeats(items, keyFn) {
   }
   return items;
 }
+
 function labelsHTML(leftLabels, rightLabels) {
-  const left  = leftLabels.map(s => `<div>${s}</div>`).join('');
-  const right = rightLabels.map(s => `<div>${s}</div>`).join('');
+  const left  = leftLabels.map(s => `<div>${s}</div>`).join("");
+  const right = rightLabels.map(s => `<div>${s}</div>`).join("");
   return `
     <div class="labels">
       <div class="left-labels"><b>${left}</b></div>
@@ -71,33 +71,35 @@ function labelsHTML(leftLabels, rightLabels) {
     </div>`;
 }
 
-// ====== Blocks ======
-const pairingA = { left: ['collective','honor'], right: ['singular'],
-                   leftLabel: ['Collective','Honor'], rightLabel: ['Singular'], tag: 'A' };
-const pairingB = { left: ['singular'], right: ['collective','honor'],
-                   leftLabel: ['Singular'], rightLabel: ['Collective','Honor'], tag: 'B' };
+// ===== Pairings =====
+const pairingA = { left: ["collective","honor"], right: ["singular"],
+                   leftLabel: ["Collective","Honor"], rightLabel: ["Singular"], tag: "A" };
+const pairingB = { left: ["singular"], right: ["collective","honor"],
+                   leftLabel: ["Singular"], rightLabel: ["Collective","Honor"], tag: "B" };
 
+// ===== Stimuli builders =====
 function buildPracticeVars(pairing) {
   const leftCat  = pairing.left[0];
   const rightCat = pairing.right[0];
-  const leftList  = leftCat === 'collective' ? COLLECTIVE : SINGULAR;
-  const rightList = rightCat === 'collective' ? COLLECTIVE : SINGULAR;
+  const leftList  = leftCat === "collective" ? COLLECTIVE : SINGULAR;
+  const rightList = rightCat === "collective" ? COLLECTIVE : SINGULAR;
   const leftWords  = makeBalancedNoRepeat(leftList,  N_PRACTICE_ATTR/2);
   const rightWords = makeBalancedNoRepeat(rightList, N_PRACTICE_ATTR/2);
-  const leftItems  = leftWords.map(w => ({stimulus:`<div class="big">${w}</div>`, category:leftCat, key:'left'}));
-  const rightItems = rightWords.map(w => ({stimulus:`<div class="big">${w}</div>`, category:rightCat, key:'right'}));
+  const leftItems  = leftWords.map(w => ({stimulus:`<div class="big">${w}</div>`, category:leftCat, key:"left"}));
+  const rightItems = rightWords.map(w => ({stimulus:`<div class="big">${w}</div>`, category:rightCat, key:"right"}));
   return fixImmediateRepeats(jsPsych.randomization.shuffle([...leftItems, ...rightItems]), it => it.stimulus);
 }
+
 function buildCombinedVars(pairing) {
   const isLeft = cat => pairing.left.includes(cat);
   const honorSeq = makeBalancedNoRepeat(HONOR, N_COMBINED_TARGET).map(w => ({
-    stimulus:`<div class="big">${w}</div>`, category:'honor', key: isLeft('honor')?'left':'right'
+    stimulus:`<div class="big">${w}</div>`, category:"honor", key: isLeft("honor")?"left":"right"
   }));
   const collSeq = makeBalancedNoRepeat(COLLECTIVE, N_COMBINED_ATTR/2).map(w => ({
-    stimulus:`<div class="big">${w}</div>`, category:'collective', key: isLeft('collective')?'left':'right'
+    stimulus:`<div class="big">${w}</div>`, category:"collective", key: isLeft("collective")?"left":"right"
   }));
   const singSeq = makeBalancedNoRepeat(SINGULAR, N_COMBINED_ATTR/2).map(w => ({
-    stimulus:`<div class="big">${w}</div>`, category:'singular', key: isLeft('singular')?'left':'right'
+    stimulus:`<div class="big">${w}</div>`, category:"singular", key: isLeft("singular")?"left":"right"
   }));
   return fixImmediateRepeats(jsPsych.randomization.shuffle([...honorSeq, ...collSeq, ...singSeq]), it => it.stimulus);
 }
@@ -106,22 +108,24 @@ function iatTrial(blockName, pairing, vars) {
   return {
     timeline: [{
       type: jsPsychIatHtml,
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      stim_key_association: jsPsych.timelineVariable('key'),
-      html_when_wrong: '<div style="color:red; font-size:80px;">X</div>',
+      stimulus: jsPsych.timelineVariable("stimulus"),
+      stim_key_association: jsPsych.timelineVariable("key"),
+      html_when_wrong: '<div style="color:red; font-size:100px;">X</div>',
       bottom_instructions: labelsHTML(pairing.leftLabel, pairing.rightLabel),
       display_feedback: true,
       force_correct_key_press: true,
       left_category_key: LEFT_KEY,
       right_category_key: RIGHT_KEY,
+      left_category_label: pairing.leftLabel,
+      right_category_label: pairing.rightLabel,
       response_ends_trial: true,
-      data: { block: blockName, pairing: pairing.tag, category: jsPsych.timelineVariable('category') }
+      data: { block: blockName, pairing: pairing.tag, category: jsPsych.timelineVariable("category") }
     }],
     timeline_variables: vars
   };
 }
 
-// ====== Instructions helper ======
+// ===== Instructions =====
 function instr(text) {
   return {
     type: jsPsychInstructions,
@@ -131,23 +135,23 @@ function instr(text) {
   };
 }
 
-// ====== Scoring ======
+// ===== Scoring =====
 function compute_sciat_D() {
-  const all = jsPsych.data.get().filter(d => d.block==='combined_A'||d.block==='combined_B');
+  const all = jsPsych.data.get().filter(d => d.block==="combined_A"||d.block==="combined_B");
   const rows = all.values().map(r => {
     const rt = r.correct ? r.rt : r.rt + ERROR_PENALTY_MS;
     return {block:r.block, rt:rt, correct:r.correct};
   }).filter(r => r.rt>=MIN_RT && r.rt<=MAX_RT);
   function mean(a){return a.reduce((x,y)=>x+y,0)/a.length;}
   function sd(a){const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)*(x-m))));}
-  const rtsA = rows.filter(r=>r.block==='combined_A').map(r=>r.rt);
-  const rtsB = rows.filter(r=>r.block==='combined_B').map(r=>r.rt);
+  const rtsA = rows.filter(r=>r.block==="combined_A").map(r=>r.rt);
+  const rtsB = rows.filter(r=>r.block==="combined_B").map(r=>r.rt);
   const meanA = mean(rtsA); const meanB = mean(rtsB);
   const sdPooled = sd(rows.map(r=>r.rt));
   return {D:(meanB-meanA)/sdPooled, meanA, meanB, nA:rtsA.length, nB:rtsB.length};
 }
 
-// ====== Finish screen ======
+// ===== Finish =====
 const finishScreen = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
@@ -160,35 +164,35 @@ const finishScreen = {
         <p>Trials kept: A=${res.nA}, B=${res.nB}</p>
       </div>`;
   },
-  choices: ['Download CSV','End'],
+  choices: ["Download CSV","End"],
   on_finish: function(data){
-    if (data.response === 0) jsPsych.data.get().localSave('csv','sciat_data.csv');
+    if (data.response === 0) jsPsych.data.get().localSave("csv","sciat_data.csv");
   }
 };
 
-// ====== Timeline ======
-const order = jsPsych.randomization.sampleWithoutReplacement(['A_first','B_first'],1)[0];
+// ===== Timeline =====
+const order = jsPsych.randomization.sampleWithoutReplacement(["A_first","B_first"],1)[0];
 const timeline = [];
-timeline.push(instr('<h2>Welcome</h2><p>This task measures associations of Honor with Collective vs Singular.</p>'));
+timeline.push(instr("<h2>Welcome</h2><p>This task measures associations of Honor with Collective vs Singular.</p>"));
 
-if(order==='A_first'){
-  timeline.push(instr('Practice sorting Collective vs Singular.'));
-  timeline.push(iatTrial('practice_A', pairingA, buildPracticeVars(pairingA)));
-  timeline.push(instr('Now Honor+Collective on the left, Singular on the right.'));
-  timeline.push(iatTrial('combined_A', pairingA, buildCombinedVars(pairingA)));
-  timeline.push(instr('Practice with the reversed mapping.'));
-  timeline.push(iatTrial('practice_B', pairingB, buildPracticeVars(pairingB)));
-  timeline.push(instr('Now Singular on the left, Honor+Collective on the right.'));
-  timeline.push(iatTrial('combined_B', pairingB, buildCombinedVars(pairingB)));
+if(order==="A_first"){
+  timeline.push(instr("Practice sorting Collective vs Singular."));
+  timeline.push(iatTrial("practice_A", pairingA, buildPracticeVars(pairingA)));
+  timeline.push(instr("Now Honor+Collective on the left, Singular on the right."));
+  timeline.push(iatTrial("combined_A", pairingA, buildCombinedVars(pairingA)));
+  timeline.push(instr("Practice with the reversed mapping."));
+  timeline.push(iatTrial("practice_B", pairingB, buildPracticeVars(pairingB)));
+  timeline.push(instr("Now Singular on the left, Honor+Collective on the right."));
+  timeline.push(iatTrial("combined_B", pairingB, buildCombinedVars(pairingB)));
 }else{
-  timeline.push(instr('Practice sorting Singular vs Collective.'));
-  timeline.push(iatTrial('practice_B', pairingB, buildPracticeVars(pairingB)));
-  timeline.push(instr('Now Singular on the left, Honor+Collective on the right.'));
-  timeline.push(iatTrial('combined_B', pairingB, buildCombinedVars(pairingB)));
-  timeline.push(instr('Practice with the reversed mapping.'));
-  timeline.push(iatTrial('practice_A', pairingA, buildPracticeVars(pairingA)));
-  timeline.push(instr('Now Honor+Collective on the left, Singular on the right.'));
-  timeline.push(iatTrial('combined_A', pairingA, buildCombinedVars(pairingA)));
+  timeline.push(instr("Practice sorting Singular vs Collective."));
+  timeline.push(iatTrial("practice_B", pairingB, buildPracticeVars(pairingB)));
+  timeline.push(instr("Now Singular on the left, Honor+Collective on the right."));
+  timeline.push(iatTrial("combined_B", pairingB, buildCombinedVars(pairingB)));
+  timeline.push(instr("Practice with the reversed mapping."));
+  timeline.push(iatTrial("practice_A", pairingA, buildPracticeVars(pairingA)));
+  timeline.push(instr("Now Honor+Collective on the left, Singular on the right."));
+  timeline.push(iatTrial("combined_A", pairingA, buildCombinedVars(pairingA)));
 }
 
 timeline.push(finishScreen);
