@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>SC-IAT: Honor x Collective vs Singular</title>
-
-  <!-- jsPsych core + CSS (UMD build!) -->
+  <meta charset="UTF-8">
+  <title>SC-IAT Example (jsPsych)</title>
+  <!-- jsPsych UMD -->
   <script src="https://unpkg.com/jspsych@7.3.4/dist/jspsych.umd.js"></script>
-  <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" />
+  <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet"/>
 
-  <!-- Plugins (UMD builds!) -->
+  <!-- iat-html plugin UMD -->
   <script src="https://unpkg.com/@jspsych/plugin-iat-html@1.1.3/dist/plugin-iat-html.umd.js"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3/dist/plugin-instructions.umd.js"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3/dist/plugin-html-button-response.umd.js"></script>
 </head>
 <body>
   <div id="jspsych-target"></div>
-  <script src="stiat.js"></script>
+
+  <script>
+    var jsPsych = initJsPsych({ display_element: 'jspsych-target' });
+
+    const trial = {
+      type: jsPsychIatHtml,
+      stimulus: '<div style="font-size: 3em;">HONOR</div>',
+      stim_key_association: 'left',
+      left_category_key: 'e',
+      right_category_key: 'i',
+      left_category_label: ['Honor'],
+      right_category_label: ['Other'],
+      html_when_wrong: '<div style="color:red; font-size:4em;">X</div>',
+      display_feedback: true,
+      force_correct_key_press: true
+    };
+
+    jsPsych.run([trial]);
+  </script>
 </body>
 </html>
