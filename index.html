@@ -7,22 +7,29 @@
     <style>
         .container { padding-top: 15px; }
     </style>
+
+    <!-- Error handler -->
     <script>
-        // Load the correct MinnoJS build
+        window.onerror = function (message, source, lineno, colno, error) {
+            document.body.innerHTML = "<pre style='color:red'>" 
+                + message + "\n" + source + ":" + lineno + "</pre>";
+        };
+    </script>
+
+    <!-- Load MinnoJS -->
+    <script>
         var scriptTag = document.createElement('script');
         scriptTag.src = 'https://cdn.jsdelivr.net/gh/baranan/minnojs@0.3/dist/pi-minno.js';
         scriptTag.onload = onLoad;
         document.head.appendChild(scriptTag);
 
         function onLoad() {
-            // Create container and canvas
             var container = document.createElement('div');
             container.className = 'container';
             var canvas = document.createElement('div');
             container.appendChild(canvas);
             document.body.appendChild(container);
 
-            // Run your manager script (must be in repo root or adjust path!)
             minnoJS(canvas, 'mgr.js')
               .catch(function(err){
                   console.error("Error loading mgr.js:", err);
@@ -30,6 +37,8 @@
               });
         }
     </script>
+</head>
+
 </head>
 <body>
 </body>
