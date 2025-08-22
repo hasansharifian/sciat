@@ -4,27 +4,17 @@
   <meta charset="UTF-8" />
   <title>SC-IAT: Honor x Collective vs Singular</title>
 
-  <!-- jsPsych core + CSS -->
-  <script src="https://unpkg.com/jspsych@7.3.4/dist/jspsych.js"></script>
+  <!-- jsPsych core + CSS (UMD build!) -->
+  <script src="https://unpkg.com/jspsych@7.3.4/dist/jspsych.umd.js"></script>
   <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" />
 
-  <!-- Plugins (UMD builds) -->
-  <script src="https://unpkg.com/@jspsych/plugin-iat-html@1.1.3/dist/index.umd.js"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3/dist/index.umd.js"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3/dist/index.umd.js"></script>
-
-  <style>
-    body { background: #fff; }
-    .big { font-size: 2.2em; }
-    .labels { font-size: 1.2em; }
-    .left-labels, .right-labels { position: fixed; top: 10px; width: 45%; }
-    .left-labels { left: 2%; text-align: left; }
-    .right-labels { right: 2%; text-align: right; }
-  </style>
+  <!-- Plugins (UMD builds!) -->
+  <script src="https://unpkg.com/@jspsych/plugin-iat-html@1.1.3/dist/plugin-iat-html.umd.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3/dist/plugin-instructions.umd.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3/dist/plugin-html-button-response.umd.js"></script>
 </head>
 <body>
   <div id="jspsych-target"></div>
-  <!-- Your task code -->
   <script src="stiat.js"></script>
 </body>
 </html>
