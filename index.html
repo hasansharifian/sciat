@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <title>SC IAT: Honor x Collective vs Singular</title>
-
-  <!-- jsPsych CSS -->
   <link href="https://cdn.jsdelivr.net/npm/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" />
-
   <style>
     body { background: #fff; }
     .big { font-size: 2.2em; }
     .labels { font-size: 1.2em; }
-    .left-labels, .right-labels { position: fixed; top: 10px; width: 45%; z-index: 1; }
+    .left-labels, .right-labels { position: fixed; top: 10px; width: 45%; }
     .left-labels { left: 2%; text-align: left; }
     .right-labels { right: 2%; text-align: right; }
   </style>
 </head>
 <body>
   <div id="jspsych-target"></div>
-
-  <!-- Your task as an ES module -->
+  <!-- IMPORTANT: must be a module -->
   <script type="module" src="stiat.js"></script>
 </body>
 </html>
