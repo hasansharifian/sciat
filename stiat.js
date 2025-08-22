@@ -107,16 +107,14 @@ function iatTrial(blockName, pairing, vars) {
     timeline: [{
       type: jsPsychIatHtml,
       stimulus: jsPsych.timelineVariable('stimulus'),
-      stim_key_association: jsPsych.timelineVariable('key'), // 'left' or 'right'
-      html_when_wrong: '<div style="color:red; font-size:100px;">✖</div>',
+      stim_key_association: jsPsych.timelineVariable('key'),
+      html_when_wrong: '<div style="color:red; font-size:80px;">X</div>',
+      bottom_instructions: labelsHTML(pairing.leftLabel, pairing.rightLabel),
       display_feedback: true,
       force_correct_key_press: true,
       left_category_key: LEFT_KEY,
       right_category_key: RIGHT_KEY,
-      left_category_label: pairing.leftLabel,
-      right_category_label: pairing.rightLabel,
       response_ends_trial: true,
-      bottom_instructions: labelsHTML(pairing.leftLabel, pairing.rightLabel),
       data: { block: blockName, pairing: pairing.tag, category: jsPsych.timelineVariable('category') }
     }],
     timeline_variables: vars
