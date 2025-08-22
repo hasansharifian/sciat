@@ -1,11 +1,14 @@
-define(['pipAPI', 'stiat.js'], function(APIConstructor, stiatExtension){
+define([
+    'pipAPI',
+    'https://cdn.jsdelivr.net/gh/baranan/minno-tasks@0.3/stiat/stiat6.js'
+], function(APIConstructor, stiatExtension){
 
     var API = new APIConstructor();
     var global = API.getGlobal();
 
     return stiatExtension({
 
-        // Example config — replace with your real categories/attributes
+        // Example config — replace with your own stimuli/categories
         category: {
             name: 'Black people',
             title: {
@@ -55,4 +58,3 @@ define(['pipAPI', 'stiat.js'], function(APIConstructor, stiatExtension){
         }
     });
 });
-
