@@ -748,5 +748,6 @@ define(['pipAPI','pipScorer','underscore'], function(APIConstructor, Scorer, _) 
 		return API.script;
 	}
 	
-	return stiatExtension;
+	return stiatExtension({});
 });
+
