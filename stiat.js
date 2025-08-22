@@ -112,7 +112,6 @@ function iatTrial(blockName, pairing, vars) {
       bottom_instructions: labelsHTML(pairing.leftLabel, pairing.rightLabel),
       display_feedback: true,
       force_correct_key_press: true,
-      key_to_move_forward: ['other key'],   // only the correct key advances after an error
       left_category_key: LEFT_KEY,
       right_category_key: RIGHT_KEY,
       left_category_label: pairing.leftLabel,
@@ -196,5 +195,6 @@ if(order==='A_first'){
 
 timeline.push(finishScreen);
 jsPsych.run(timeline);
+
 
 
