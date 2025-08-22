@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>SC-IAT</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/minnojs/minno-quest@0.3/dist/main.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/baranan/minnojs@0.3/dist/main.css" />
     <style>
         .container { padding-top: 15px; }
     </style>
     <script>
-        // Load the full MinnoJS bundle
+        // Load the correct MinnoJS build
         var scriptTag = document.createElement('script');
-        scriptTag.src = 'https://cdn.jsdelivr.net/gh/minnojs/minno-quest@0.3/dist/pi-minno.js';
+        scriptTag.src = 'https://cdn.jsdelivr.net/gh/baranan/minnojs@0.3/dist/pi-minno.js';
         scriptTag.onload = onLoad;
         document.head.appendChild(scriptTag);
 
@@ -22,11 +22,16 @@
             container.appendChild(canvas);
             document.body.appendChild(container);
 
-            // Run your manager script (which loads stiat.js)
-            minnoJS(canvas, 'mgr.js');
+            // Run your manager script (must be in repo root or adjust path!)
+            minnoJS(canvas, 'mgr.js')
+              .catch(function(err){
+                  console.error("Error loading mgr.js:", err);
+                  canvas.innerHTML = "<p style='color:red;'>Failed to load the IAT. Check the console for details.</p>";
+              });
         }
     </script>
 </head>
 <body>
 </body>
 </html>
+
