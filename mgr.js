@@ -1,60 +1,71 @@
-define([
-    'pipAPI',
-    'https://cdn.jsdelivr.net/gh/baranan/minno-tasks@0.3/stiat/stiat6.js'
-], function(APIConstructor, stiatExtension){
+define(['pipAPI', 'https://cdn.jsdelivr.net/gh/baranan/minno-tasks@0.*/stiat/qualtrics/qstiat6.js'], function(APIConstructor, stiatExtension){
 
-    var API = new APIConstructor();
-    var global = API.getGlobal();
+	var API = new APIConstructor();
+		  return stiatExtension({
+		  category : { 
+		    name : 'Asian People', //Will appear in the data.
+		    title : {
+		      media : {word : 'Asian People'}, //Name of the category presented in the task.
+		      css : {color:'#31b404','font-size':'2em'}, //Style of the category title.
+		      height : 7 //Used to position the "Or" in the combined block.
+		    }, 
+		    media : [ //Stimuli content as PIP's media objects
+    		   	{image : 'af00004.png'}, 
+        		{image : 'af00012.png'}, 
+        		{image : 'af00007.png'},
+			    {image : 'am00008.png'},
+			    {image : 'am00009.png'},
+			    {image : 'am00002.png'}
+		    ], 
+		    //Stimulus css (style)
+		    css : {color:'#31b404','font-size':'3em'}
+		  },	
 
-    return stiatExtension({
+  		attribute1 : 
+			{
+			name : 'Bad', //Attribute label
+			title : {
+				media : {word : 'Bad'}, //Name of the category presented in the task.
+				css : {color:'#31b404','font-size':'2em'}, //Style of the category title.
+				height : 7 //Used to position the "Or" in the combined block.
+			}, 
+			media : [ //Stimuli
+				{word: 'Angry'},
+				{word: 'Despise'},
+				{word: 'Disgust'},
+				{word: 'Gross'},
+				{word: 'Horrific'},
+				{word: 'Negative'},
+				{word: 'Sadness'},
+        {word: 'Tragic'}
+			], 
+			//Can change color and size of the targets here.
+			css : {color:'#31b404','font-size':'3em'}
+			},
+		attribute2 : 
+			{
+			name : 'Good', //Attribute label
+			title : {
+				media : {word : 'Good'}, //Name of the category presented in the task.
+				css : {color:'#31b404','font-size':'2em'}, //Style of the category title.
+				height : 7 //Used to position the "Or" in the combined block.
+			}, 
+			media : [ //Stimuli
+				{word: 'Appealing'},
+				{word: 'Cheer'},
+				{word: 'Delightful'},
+				{word: 'Fabulous'},
+				{word: 'Glad'},
+				{word: 'Joyous'},
+				{word: 'Magnificent'},
+				{word: 'Spectacular'}
+			], 
+			//Can change color and size of the targets here.
+			css : {color:'#31b404','font-size':'3em'}
+			},
 
-        // Example config — replace with your own stimuli/categories
-        category: {
-            name: 'Black people',
-            title: {
-                media: {word: 'Black people'},
-                css: {color:'#31940F','font-size':'2em'},
-                height: 7
-            },
-            stimulusMedia: [
-                {word: 'Jamal'},
-                {word: 'Lakisha'},
-                {word: 'Tyrone'},
-                {word: 'Shanice'}
-            ],
-            stimulusCss: {color:'#31940F','font-size':'2em'}
-        },
-
-        attribute1: {
-            name: 'Positive',
-            title: {
-                media: {word: 'Positive'},
-                css: {color:'#0000FF','font-size':'2em'},
-                height: 7
-            },
-            stimulusMedia: [
-                {word: 'Joy'},
-                {word: 'Love'},
-                {word: 'Peace'},
-                {word: 'Wonderful'}
-            ],
-            stimulusCss: {color:'#0000FF','font-size':'2em'}
-        },
-
-        attribute2: {
-            name: 'Negative',
-            title: {
-                media: {word: 'Negative'},
-                css: {color:'#FF0000','font-size':'2em'},
-                height: 7
-            },
-            stimulusMedia: [
-                {word: 'Horrible'},
-                {word: 'Evil'},
-                {word: 'Failure'},
-                {word: 'Terrible'}
-            ],
-            stimulusCss: {color:'#FF0000','font-size':'2em'}
-        }
-    });
-});
+  base_url : {//Where are your images at?
+    image : 'https://satchmo496.github.io/images/'
+  }}
+  );
+  });
