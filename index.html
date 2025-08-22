@@ -15,10 +15,10 @@
         };
     </script>
 
-    <!-- Load MinnoJS -->
+    <!-- Load MinnoJS (from npm CDN, safer than GitHub CDN) -->
     <script>
         var scriptTag = document.createElement('script');
-        scriptTag.src = 'https://cdn.jsdelivr.net/gh/baranan/minnojs@0.3/dist/pi-minno.js';
+        scriptTag.src = 'https://cdn.jsdelivr.net/npm/minnojs@0.3/dist/pi-minno.js';
         scriptTag.onload = onLoad;
         document.head.appendChild(scriptTag);
 
@@ -31,15 +31,5 @@
 
             minnoJS(canvas, 'mgr.js')
               .catch(function(err){
-                  console.error("Error loading mgr.js:", err);
-                  canvas.innerHTML = "<p style='color:red;'>Failed to load the IAT. Check the console for details.</p>";
-              });
-        }
-    </script>
-</head>
 
-</head>
-<body>
-</body>
-</html>
 
